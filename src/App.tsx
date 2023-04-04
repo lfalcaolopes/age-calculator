@@ -38,6 +38,7 @@ function App() {
     setError(undefined);
 
     const birth = dayjs(`${year}-${month}-${day}`);
+
     let reuseDate = dayjs();
 
     const diffYears = today.diff(birth, "year");

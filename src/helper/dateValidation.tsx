@@ -15,24 +15,16 @@ interface validationProps {
   error: errorProps | undefined;
 }
 
+function formatNumber(num: number | undefined): string | undefined {
+  return num?.toLocaleString("en-US", { minimumIntegerDigits: 2, useGrouping: false });
+}
+
 dayjs.extend(customParseFormat);
 
 export function dateValidation({ day, month, year, setError, error }: validationProps) {
   let dayError;
   let monthError;
   let yearError;
-
-  if (day === undefined || month === undefined || year === undefined) {
-    dayError = "This field is required";
-    monthError = "This field is required";
-    yearError = "This field is required";
-  }
-
-  if (dayjs(`${year}-${month}-${day}`, "YYYY-MM-DD", true).isValid() === false) {
-    dayError = "Must be a valid date";
-    monthError = "";
-    yearError = "";
-  }
 
   if (!day) {
     dayError = "This field is required";
@@ -48,11 +40,15 @@ export function dateValidation({ day, month, year, setError, error }: validation
     yearError = "This field is required";
   } else if (year > 2023) {
     yearError = "Must be in the past";
-  } else if (year < 1) {
-    yearError = "Must be a valid year";
   }
 
   if (dayError || monthError || yearError) {
+    setError({ day: dayError, month: monthError, year: yearError });
+    return false;
+  } else if (dayjs(`${year}-${formatNumber(month)}-${formatNumber(day)}`, "YYYY-MM-DD", true).isValid() === false) {
+    dayError = "Must be a valid date";
+    monthError = " ";
+    yearError = " ";
     setError({ day: dayError, month: monthError, year: yearError });
     return false;
   } else {
