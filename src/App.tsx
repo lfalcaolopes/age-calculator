@@ -54,7 +54,7 @@ function App() {
   }
 
   return (
-    <div className="bg-custom-off-white h-screen flex items-center justify-center text-custom-off-black">
+    <div className="bg-custom-off-white h-screen flex items-center justify-center text-custom-off-black relative">
       <div className="sm:w-full sm:m-4 w-[40rem] aspect-[4/3] p-8 bg-white drop-shadow-md rounded-[1.5rem] rounded-br-[8rem]">
         <form
           onSubmit={(e) => {
@@ -79,6 +79,12 @@ function App() {
           <Output type="day" amount={diff?.days} />
         </div>
       </div>
+      <p className="font-poppins text-xl mt-12 absolute bottom-16  sm:hidden">
+        Feito por{" "}
+        <a className="text-custom-purple underline" target="_blank" href="mailto:lfalcaolopes@gmail.com">
+          Lucas Falcão Lopes
+        </a>
+      </p>
     </div>
   );
 }
